@@ -460,7 +460,7 @@ export default function HistoryTimeline() {
             <h1 className="text-xl font-light leading-tight">
               HISTORY OF <span className="text-red-600 font-normal">WÜRTH BAER</span> SUPPLY COMPANY
             </h1>
-            <p className="text-lg text-black mt-2">1950 TO PRESENT</p>
+            <p className="text-lg text-black">1950 TO PRESENT</p>
           </div>
 
           <div className="relative">

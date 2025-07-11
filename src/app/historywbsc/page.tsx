@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import Image from 'next/image'
 
@@ -200,7 +199,7 @@ export default function HistoryTimeline() {
               <div
                 className="absolute left-1/2 transform -translate-x-1/2 w-8 bg-red-600 z-10 mt-0"
                 style={{
-                  top: `calc(${(idx / timelineData.length) * 100 - 1}% )`,
+                  top: `calc(${(idx / timelineData.length) * 100 - 1.5}% )`,
                   height: `calc(100% - ${(idx / timelineData.length) * 100 - 2}% )`
                 }}
               ></div>
@@ -226,7 +225,7 @@ export default function HistoryTimeline() {
                     <div className="relative">
                       <div className="h-1 bg-gray-300 mb-4 -mt-0.25"></div>
                       <div
-                        className={`absolute left-0 top-1/2 transform -translate-y-1/2 w-3 h-3 bg-gray-400 rounded-full ${item.year === "1999" ? "-mt-46.25" : item.year === "2019" || item.year === "2022" ? "-mt-20" : "-mt-18"}`}
+                        className={`absolute left-0 top-1/2 transform -translate-y-1/2 w-3 h-3 bg-gray-300 rounded-full ${item.year === "1999" ? "-mt-46.25" : item.year === "2019" || item.year === "2022" ? "-mt-20" : "-mt-18"}`}
                       >
                       </div>
                     
@@ -314,7 +313,7 @@ export default function HistoryTimeline() {
                     {/* Gray Line with sphere*/}
                     <div className="relative">
                       <div className="h-1 bg-gray-300 mt-0.75 mb-4"></div>
-                      <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-3 h-3 bg-gray-400 rounded-full"></div>
+                      <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-3 h-3 bg-gray-300 rounded-full"></div>
                     </div>
                     
                     <div className="flex items-start space-x-6 text-left">
@@ -499,19 +498,29 @@ export default function HistoryTimeline() {
               {timelineData.map((item, index) => (
                 <div key={index} className="relative">
                   <div className="absolute left-4 top-8">
+                    <div className="absolute left-2 top-1 h-1 bg-gray-300 z-0" style={{width: 'calc(100vw - 2rem)'}}></div>
+                    <div
+                        className="absolute bg-gray-300 w-3 h-3 rounded-full z-10"
+                        style={{
+                            left: 'calc(100vw - 2rem)',
+                            top: '0rem'
+                        }}
+                    ></div>
                     <div className={`w-3 h-3 transform rotate-45 ml-0.5 ${
                       Number(item.year) >= 1997 ? 'bg-red-600' : 'bg-orange-400'
-                    } translate-x-2`}></div>
+                    } translate-x-2 relative z-10`}></div>
+                  </div>
+
+                   {/* Timeline Year */}
+                  <div className={`ml-16 text-2xl font-bold mb-2 ${
+                    item.orangeText === "JANUARY 1997"
+                      ? "text-red-600 font-extrabold"
+                      : "text-gray-400"
+                  }`}>
+                    {item.year}
                   </div>
 
                   <div className="ml-16 bg-white p-4">
-                    {/* Timeline Year */}
-                    <div className={`text-2xl font-bold mb-2 ${
-                      Number(item.year) >= 1997 ? 'text-red-600' : 'text-orange-500'
-                    }`}>
-                      {item.year}
-                    </div>
-
                     {item.year === "1950" && (
                       <div className="mb-4">
                         <div className="w-24 h-16 mx-auto mb-3">
@@ -528,24 +537,35 @@ export default function HistoryTimeline() {
 
                     {item.year === "1958" && (
                       <div className="mb-4">
-                        <div className="w-20 h-20 mx-auto mb-3">
-                          <Image
-                            src="/1958two.png"
-                            alt="Facility moves icon"
-                            width={80}
-                            height={80}
-                            className="w-full h-full object-contain"
-                          />
+                        <div className="flex justify-center items-center w-full mb-3 space-x-2">
+                            <div className="w-24 h-20 bg-gray-200 rounded overflow-hidden flex-shrink-0">
+                                <Image
+                                    src="/1958two.png"
+                                    alt="Facility moves icon"
+                                    width={80}
+                                    height={80}
+                                    className="w-full h-full object-contain"
+                                />
+                            </div>
+                            <div className="w-24 h-20 bg-gray-200 rounded overflow-hidden flex-shrink-0">
+                                <Image
+                                    src="/1958.png"
+                                    alt="Facility moves icon"
+                                    width={80}
+                                    height={80}
+                                    className="w-full h-full object-contain"
+                                />
+                            </div>
                         </div>
                         <div className="text-center mb-2">
                           <span className="font-bold text-black">Four</span>
                           <span className="text-black text-sm"> more subsequent facility moves took place over the next 24 years, </span>
-                          <span className="text-orange-500 font-semibold text-sm block">UNTIL THE BIG MOVE...</span>
+                          <span className="text-orange-500 font-bold text-lg block">UNTIL THE BIG MOVE...</span>
                         </div>
                       </div>
                     )}
 
-                    {item.year === "1997" && index === timelineData.findIndex(i => i.year === "1997") && (
+                    {item.orangeText === "JANUARY 1997" && (
                       <div className="mb-4">
                         <div className="w-full max-w-xs mx-auto mb-3">
                           <Image
@@ -556,23 +576,20 @@ export default function HistoryTimeline() {
                             className="w-full h-auto object-contain"
                           />
                         </div>
-                        <div className="w-full max-w-xs mx-auto">
-                          <Image
-                            src="/1997two.png"
-                            alt="1997 milestone"
-                            width={340}
-                            height={170}
-                            className="w-full h-auto object-contain"
-                          />
-                        </div>
                       </div>
                     )}
 
                     <div className="space-y-3">
                       {/* Top Text Red or Orange depending on Year */}
-                      <p className={`font-semibold text-sm ${
-                        Number(item.year) >= 1997 ? 'text-red-600' : 'text-orange-500'
-                      }`}>
+                      <p
+                        className={` ${
+                          item.year === "1988"
+                            ? "text-lg font-extrabold text-orange-500"
+                            : Number(item.year) >= 1997
+                              ? "text-red-600 text-sm font-semibold"
+                              : "text-orange-500 text-sm font-semibold"
+                        }`}
+                      >
                         {item.orangeText}
                       </p>
 
@@ -587,6 +604,34 @@ export default function HistoryTimeline() {
                           {item.description}
                         </p>
                       )}
+
+                      {item.orangeText === "JANUARY 1997" && (
+                      <div className="mb-4">
+                        <div className="w-full max-w-xs mx-auto">
+                          <Image
+                            src="/1997two.png"
+                            alt="1997 milestone"
+                            width={340}
+                            height={170}
+                            className="w-full h-auto object-contain"
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {item.orangeText === "SEPTEMBER 1997" && (
+                      <div className="mb-4">
+                        <div className="w-20 h-20 mx-auto mb-3">
+                          <Image
+                            src="/1993.png"
+                            alt="1997 milestone"
+                            width={120}
+                            height={120}
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                      </div>
+                    )}
 
                       {/* Image */}
                       {item.imageSrc && item.year !== "1950" && item.year !== "1958" && item.year !== "1997" && (
@@ -605,13 +650,13 @@ export default function HistoryTimeline() {
                     </div>
 
                     {item.year === "1999" && (
-                      <div className="mt-6 pt-4 border-t border-gray-200">
+                      <div className="mt-6">
                         <div className="text-center mb-3">
                           <Image
                             src="/arrow.png"
                             alt="Arrow"
-                            width={24}
-                            height={24}
+                            width={32}
+                            height={32}
                             className="mx-auto object-contain"
                           />
                         </div>
